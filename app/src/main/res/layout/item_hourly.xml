@@ -9,12 +9,11 @@
 
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/tvTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
         android:fontFamily="@font/roboto_medium"
         android:gravity="center_horizontal"
         android:textColor="@color/white"
@@ -25,25 +24,23 @@
         tools:text="17:00" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/ivHourlyWeather"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView6"
+        app:layout_constraintBottom_toTopOf="@id/twHourlyTemp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:layout_constraintTop_toBottomOf="@id/tvTime"
         tools:ignore="ContentDescription"
-        tools:srcCompat="@drawable/ic_white_day_cloudy" />
+        tools:src="@drawable/ic_white_day_cloudy" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/twHourlyTemp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="32dp"
         android:fontFamily="@font/roboto_medium"
         android:gravity="center_horizontal"
