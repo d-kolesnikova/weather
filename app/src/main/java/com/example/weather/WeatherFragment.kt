@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.weather.data.CurrentWeather
+import com.example.weather.data.HourlyWeather
 import com.example.weather.databinding.FragmentWeatherBinding
 import java.text.DateFormatSymbols
 import java.text.SimpleDateFormat
@@ -46,6 +47,22 @@ class WeatherFragment : Fragment() {
             drawableWeather = R.drawable.ic_white_day_cloudy,
             humidity = 33,
         )
+        val hourlyWeather = HourlyWeather(
+            time = Date(Calendar.getInstance().timeInMillis),
+            temp = 12,
+            drawableWeather = R.drawable.ic_white_day_cloudy,
+        )
+        val hourlyWeather2 = HourlyWeather(
+            time = Date(Calendar.getInstance().timeInMillis),
+            temp = 12,
+            drawableWeather = R.drawable.ic_white_day_cloudy,
+        )
+        val hourlyWeather3 = HourlyWeather(
+            time = Date(Calendar.getInstance().timeInMillis),
+            temp = 12,
+            drawableWeather = R.drawable.ic_white_day_cloudy,
+        )
+        val hourlyAdapter = HourlyAdapter(listOf(hourlyWeather, hourlyWeather2, hourlyWeather3))
         with(binding) {
             tvDate.text = convertDateToString(currentWeather.date)
             tvTemp.text = currentWeather.tempMin.toString().plus("/").plus(currentWeather.tempMax)
@@ -53,6 +70,7 @@ class WeatherFragment : Fragment() {
             tvWind.text = currentWeather.windSpeed.toString()
             ivWindDirection.setImageResource(currentWeather.windDirection)
             ivMainWeather.setImageResource(currentWeather.drawableWeather)
+            rvHourlyWeather.adapter = hourlyAdapter
 
         }
     }
