@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.weather.data.CurrentWeather
+import com.example.weather.data.DailyWeather
 import com.example.weather.data.HourlyWeather
 import com.example.weather.databinding.FragmentWeatherBinding
 import java.text.DateFormatSymbols
@@ -23,8 +24,6 @@ class WeatherFragment : Fragment() {
         val format = SimpleDateFormat("E, d MMMM", locale)
         format.dateFormatSymbols = dfs
         return format.format(time)
-
-
     }
 
     override fun onCreateView(
@@ -62,7 +61,24 @@ class WeatherFragment : Fragment() {
             temp = 12,
             drawableWeather = R.drawable.ic_white_day_cloudy,
         )
+        val dailyWeather = DailyWeather(
+            date = Date(Calendar.getInstance().timeInMillis),
+            temp = 12,
+            drawableWeather = R.drawable.ic_white_day_cloudy,
+        )
+        val dailyWeather2 = DailyWeather(
+            date = Date(Calendar.getInstance().timeInMillis),
+            temp = 12,
+            drawableWeather = R.drawable.ic_white_day_cloudy,
+        )
+        val dailyWeather3 = DailyWeather(
+            date = Date(Calendar.getInstance().timeInMillis),
+            temp = 12,
+            drawableWeather = R.drawable.ic_white_day_cloudy,
+        )
         val hourlyAdapter = HourlyAdapter(listOf(hourlyWeather, hourlyWeather2, hourlyWeather3))
+        val dailyAdapter = DailyAdapter(listOf(dailyWeather, dailyWeather2, dailyWeather3))
+
         with(binding) {
             tvDate.text = convertDateToString(currentWeather.date)
             tvTemp.text = currentWeather.tempMin.toString().plus("/").plus(currentWeather.tempMax)
@@ -71,7 +87,7 @@ class WeatherFragment : Fragment() {
             ivWindDirection.setImageResource(currentWeather.windDirection)
             ivMainWeather.setImageResource(currentWeather.drawableWeather)
             rvHourlyWeather.adapter = hourlyAdapter
-
+            rvDailyWeather.adapter = dailyAdapter
         }
     }
 
