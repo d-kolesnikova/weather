@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Weather</string>
+    <string name="update_hourly">Обновить часы</string>
+    <string name="update_dayly">Обновить дни</string>
 </resources>

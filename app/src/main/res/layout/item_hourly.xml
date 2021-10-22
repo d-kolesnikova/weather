@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:minHeight="155dp"
     android:background="@color/blue"
     android:orientation="vertical">
 
@@ -29,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toTopOf="@id/twHourlyTemp"
+        app:layout_constraintBottom_toTopOf="@id/tvHourlyTemp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTime"
@@ -37,7 +38,7 @@
         tools:src="@drawable/ic_white_day_cloudy" />
 
     <TextView
-        android:id="@+id/twHourlyTemp"
+        android:id="@+id/tvHourlyTemp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
