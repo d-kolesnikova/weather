@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import com.example.weather.data.CurrentWeather
-import com.example.weather.data.DailyWeather
-import com.example.weather.data.HourlyWeather
+import androidx.fragment.app.viewModels
 import com.example.weather.databinding.FragmentWeatherBinding
 import java.text.DateFormatSymbols
 import java.text.SimpleDateFormat
@@ -16,6 +15,11 @@ import java.util.*
 class WeatherFragment : Fragment() {
     private var _binding: FragmentWeatherBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: WeatherViewModel by viewModels()
+
+    private val hourlyAdapter = HourlyAdapter(emptyList())
+    private val dailyAdapter = DailyAdapter(emptyList())
 
     private fun convertDateToString(time: Date): String {
         val locale = Locale("ru")
@@ -37,58 +41,37 @@ class WeatherFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val currentWeather = CurrentWeather(
-            date = Date(Calendar.getInstance().timeInMillis),
-            tempMin = 12,
-            tempMax = 30,
-            windDirection = R.drawable.ic_icon_wind_e,
-            windSpeed = 5,
-            drawableWeather = R.drawable.ic_white_day_cloudy,
-            humidity = 33,
-        )
-        val hourlyWeather = HourlyWeather(
-            time = Date(Calendar.getInstance().timeInMillis),
-            temp = 12,
-            drawableWeather = R.drawable.ic_white_day_cloudy,
-        )
-        val hourlyWeather2 = HourlyWeather(
-            time = Date(Calendar.getInstance().timeInMillis),
-            temp = 12,
-            drawableWeather = R.drawable.ic_white_day_cloudy,
-        )
-        val hourlyWeather3 = HourlyWeather(
-            time = Date(Calendar.getInstance().timeInMillis),
-            temp = 12,
-            drawableWeather = R.drawable.ic_white_day_cloudy,
-        )
-        val dailyWeather = DailyWeather(
-            date = Date(Calendar.getInstance().timeInMillis),
-            temp = 12,
-            drawableWeather = R.drawable.ic_white_day_cloudy,
-        )
-        val dailyWeather2 = DailyWeather(
-            date = Date(Calendar.getInstance().timeInMillis),
-            temp = 12,
-            drawableWeather = R.drawable.ic_white_day_cloudy,
-        )
-        val dailyWeather3 = DailyWeather(
-            date = Date(Calendar.getInstance().timeInMillis),
-            temp = 12,
-            drawableWeather = R.drawable.ic_white_day_cloudy,
-        )
-        val hourlyAdapter = HourlyAdapter(listOf(hourlyWeather, hourlyWeather2, hourlyWeather3))
-        val dailyAdapter = DailyAdapter(listOf(dailyWeather, dailyWeather2, dailyWeather3))
 
         with(binding) {
-            tvDate.text = convertDateToString(currentWeather.date)
-            tvTemp.text = currentWeather.tempMin.toString().plus("/").plus(currentWeather.tempMax)
-            tvHumidity.text = currentWeather.humidity.toString()
-            tvWind.text = currentWeather.windSpeed.toString()
-            ivWindDirection.setImageResource(currentWeather.windDirection)
-            ivMainWeather.setImageResource(currentWeather.drawableWeather)
+            tvDate.text = convertDateToString(viewModel.currentWeather.date)
+            tvTemp.text = viewModel.currentWeather.tempMin.toString().plus("/")
+                .plus(viewModel.currentWeather.tempMax)
+            tvHumidity.text = viewModel.currentWeather.humidity.toString()
+            tvWind.text = viewModel.currentWeather.windSpeed.toString()
+            ivWindDirection.setImageResource(viewModel.currentWeather.windDirection)
+            ivMainWeather.setImageResource(viewModel.currentWeather.drawableWeather)
+
             rvHourlyWeather.adapter = hourlyAdapter
             rvDailyWeather.adapter = dailyAdapter
+
+            pbDaily.isVisible = true
+            pbHourly.isVisible = true
         }
+        viewModel.loadHourlyForecast(::onHourlyLoaded)
+        viewModel.loadDailyForecast(::onDailyLoaded)
+    }
+
+
+    private fun onHourlyLoaded() {
+        hourlyAdapter.setData(viewModel.hourlyWeather)
+        binding.rvHourlyWeather.isVisible = true
+        binding.pbHourly.isVisible = false
+    }
+
+    private fun onDailyLoaded() {
+        dailyAdapter.setData(viewModel.dailyWeather)
+        binding.rvDailyWeather.isVisible = true
+        binding.pbDaily.isVisible = false
     }
 
     override fun onDestroyView() {

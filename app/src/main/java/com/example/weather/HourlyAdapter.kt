@@ -18,8 +18,13 @@ private fun convertDateToStringH(time: Date): String {
     return formatTime.format(time)
 }
 
-class HourlyAdapter(private val data: List<HourlyWeather>) :
+class HourlyAdapter(private var data: List<HourlyWeather>) :
     RecyclerView.Adapter<HourlyAdapter.HourlyViewHolder>() {
+
+    fun setData(data: List<HourlyWeather>) {
+        this.data = data
+        notifyDataSetChanged()
+    }
 
     class HourlyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = ItemHourlyBinding.bind(view)

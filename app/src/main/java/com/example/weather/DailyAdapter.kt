@@ -20,8 +20,13 @@ private fun convertDateToString(time: Date): String {
     return formatDay.format(time)
 }
 
-class DailyAdapter(private val data: List<DailyWeather>) :
+class DailyAdapter(private var data: List<DailyWeather>) :
     RecyclerView.Adapter<DailyAdapter.DailyViewHolder>() {
+
+    fun setData(data: List<DailyWeather>) {
+        this.data = data
+        notifyDataSetChanged()
+    }
 
     class DailyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = ItemDailyBinding.bind(view)
